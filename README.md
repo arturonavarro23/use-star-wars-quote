@@ -13,15 +13,23 @@ npm install --save @arturonavarro/use-star-wars-quote
 ## Usage
 
 ```jsx
-import React, { Component } from 'react'
-
-import { useMyHook } from '@arturonavarro/use-star-wars-quote'
+import React from 'react'
+import { useStarWarsQuote } from '@arturonavarro/use-star-wars-quote'
 
 const Example = () => {
-  const example = useMyHook()
-  return (
-    <div>{example}</div>
-  )
+   const { quote, loading } = useStarWarsQuote();
+
+   if (loading) return <p>Loading...</p>;
+
+   if (quote) {
+      return (
+         <h1>
+            {quote}
+         </h1>
+      );
+   }
+
+   return null;
 }
 ```
 
