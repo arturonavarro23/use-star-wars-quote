@@ -1,12 +1,20 @@
 import React from 'react'
-import { useMyHook } from '@arturonavarro/use-star-wars-quote'
+import { useStarWarsQuote } from '@arturonavarro/use-star-wars-quote'
 
 const App = () => {
-  const example = useMyHook()
-  return (
-    <div>
-      {example}
-    </div>
-  )
+   const { quote, loading } = useStarWarsQuote();
+
+   if (loading) return <p>Loading...</p>;
+
+   if (quote) {
+      return (
+         <h1>
+            {quote}
+         </h1>
+      );
+   }
+
+   return null;
 }
+
 export default App

@@ -1,21 +1,24 @@
-import * as React from 'react'
+import { useEffect, useState } from "react";
 
-export const useMyHook = () => {
-  let [{
-    counter
-  }, setState] = React.useState({
-    counter: 0
-  })
+export function useStarWarsQuote() {
+   const [quote, setQuote] = useState('');
+   const [loading, setLoading] = useState(false);
 
-  React.useEffect(() => {
-    let interval = window.setInterval(() => {
-      counter++
-      setState({counter})
-    }, 1000)
-    return () => {
-      window.clearInterval(interval)
-    }
-  }, [])
 
-  return counter
+   useEffect(() => {
+      async function getStarWarsQuote() {
+         setLoading(true);
+
+         const response = await fetch(
+            'http://swquotesapi.digitaljedi.dk/api/SWQuote/RandomStarWarsQuote'
+         );
+
+         const data = await response.json();
+         const quote = data.starWarsQuote;
+         setQuote(quote);
+         setLoading(false);
+      }
+      getStarWarsQuote();
+   }, []);
+   return { quote, loading };
 }
